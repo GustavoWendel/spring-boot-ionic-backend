@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gustavowendel.cursomc.domain.Categoria;
-import com.gustavowendel.cursomc.service.CategoriaService;
+import com.gustavowendel.cursomc.services.CategoriaService;
 
 
 @RestController

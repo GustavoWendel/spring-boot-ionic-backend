@@ -1,4 +1,4 @@
-package com.gustavowendel.cursomc.service;
+package com.gustavowendel.cursomc.services;
 
 import java.util.Optional;
 
@@ -7,15 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.gustavowendel.cursomc.domain.Categoria;
 import com.gustavowendel.cursomc.repositories.CategoriaRepository;
-import com.gustavowendel.cursomc.service.exceptions.ObjectNotFoundException;
+import com.gustavowendel.cursomc.services.exceptions.ObjectNotFoundException;
 
 
 @Service
 public class CategoriaService {
-	
+
+	private final CategoriaRepository repo;
+
 	@Autowired
-	private CategoriaRepository repo;
-	
+	public CategoriaService(CategoriaRepository repo) {
+		this.repo = repo;
+	}
+
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(

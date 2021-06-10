@@ -1,4 +1,4 @@
-package com.gustavowendel.cursomc.service.exceptions;
+package com.gustavowendel.cursomc.services.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException{
 
