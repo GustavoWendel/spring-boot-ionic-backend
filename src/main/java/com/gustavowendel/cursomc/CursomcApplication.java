@@ -1,31 +1,14 @@
 package com.gustavowendel.cursomc;
 
-import com.gustavowendel.cursomc.domain.Categoria;
-import com.gustavowendel.cursomc.domain.Produto;
-import com.gustavowendel.cursomc.domain.Estado;
-import com.gustavowendel.cursomc.domain.Cidade;
-import com.gustavowendel.cursomc.domain.Endereco;
-import com.gustavowendel.cursomc.domain.Cliente;
-import com.gustavowendel.cursomc.domain.Pedido;
-import com.gustavowendel.cursomc.domain.Pagamento;
-import com.gustavowendel.cursomc.domain.PagamentoComCartao;
-import com.gustavowendel.cursomc.domain.PagamentoComBoleto;
+import com.gustavowendel.cursomc.domain.*;
 import com.gustavowendel.cursomc.domain.enums.EstadoPagamento;
 import com.gustavowendel.cursomc.domain.enums.TipoCliente;
 
-import com.gustavowendel.cursomc.repositories.CategoriaRepository;
-import com.gustavowendel.cursomc.repositories.CidadeRepository;
-import com.gustavowendel.cursomc.repositories.ClienteRepository;
-import com.gustavowendel.cursomc.repositories.EnderecoRepository;
-import com.gustavowendel.cursomc.repositories.EstadoRepository;
-import com.gustavowendel.cursomc.repositories.PagamentoRepository;
-import com.gustavowendel.cursomc.repositories.PedidoRepository;
-import com.gustavowendel.cursomc.repositories.ProdutoRepository;
+import com.gustavowendel.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,8 +40,10 @@ public class CursomcApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepository;
 
 	@Autowired
-	PagamentoRepository pagamentoRepository;
+	private PagamentoRepository pagamentoRepository;
 
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -120,5 +105,19 @@ public class CursomcApplication implements CommandLineRunner{
 
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped1, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+
 	}
 }
