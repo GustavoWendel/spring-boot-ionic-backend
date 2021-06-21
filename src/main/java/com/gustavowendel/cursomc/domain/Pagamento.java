@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gustavowendel.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
@@ -16,6 +17,7 @@ public abstract class Pagamento implements Serializable {
     private Integer estado;
 
     @JoinColumn(name = "pedido_id")
+    @JsonBackReference
     @OneToOne
     @MapsId
     private Pedido pedido;
